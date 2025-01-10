@@ -24,17 +24,20 @@ for i in range(1, 11):  # Цикл от 1 до 10 включительно
     age = i * 10
     balance = 1000
 
-    # Использование f-строки для формирования значения balance
-    if i % 2 == 1:
-        balance = 500
-
     # Выполнение вставки данных в базу данных
     cursor.execute(f'''
         INSERT INTO Users (username, email, age, balance) 
         VALUES ("{username}", "{email}", {age}, {balance})
     ''')
 
-# Удаление каждой третьей записи начиная с первой
+# Обновляем баланс у каждой второй записи начиная с первой
+cursor.execute('''
+    UPDATE Users
+    SET balance = 500
+    WHERE id % 2 == 1
+''')
+
+# Удаляем каждую третью запись начиная с первой
 cursor.execute('''
     DELETE FROM Users
     WHERE id % 3 == 1
